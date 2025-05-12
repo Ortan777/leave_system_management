@@ -29,3 +29,22 @@ A web-based leave management application designed for students and administrator
 ```bash
 git clone https://github.com/YOUR_USERNAME/leave-management-system.git
 cd leave-management-system
+
+
+### 2. Install Dependencies
+
+```bash
+pip install -r requirements.txt
+
+
+### 3. Create and Configure the Database
+Import the database.sql file into MySQL:
+
+```bash
+mysql -u root -p < database.sql
+
+
+### 4. Run the Application
+
+```bash
+python app.py
