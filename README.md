@@ -23,7 +23,7 @@ A web-based leave management application designed for students and administrator
 ---
 
 
-### 1. Clone the Repository
+### **1. Clone the Repository**
 
 git clone https://github.com/YOUR_USERNAME/leave-management-system.git
 cd leave-management-system
