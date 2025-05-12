@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Student Dashboard{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header">
+                <h5>Quick Actions</h5>
+            </div>
+            <div class="list-group list-group-flush">
+                <a href="/student/apply" class="list-group-item list-group-item-action dashboard-link">
+                    <i class="bi bi-pencil-square"></i> Apply for Leave
+                </a>
+                <a href="/subject_leaves" class="list-group-item list-group-item-action dashboard-link">
+                    <i class="bi bi-book"></i> Subject Leaves
+                </a>
+                <a href="/student/status" class="list-group-item list-group-item-action dashboard-link">
+                    <i class="bi bi-clock-history"></i> Leave Status
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="card">
+            <div class="card-header">
+                <h5>Welcome, {{ usn }}</h5>
+            </div>
+            <div class="card-body">
+                {% if notifications %}
+                <div class="alert alert-info">
+                    <h5><i class="bi bi-bell"></i> Notifications</h5>
+                    <ul class="mb-0">
+                        {% for n in notifications %}
+                            <li>Leave from {{ n[0] }} to {{ n[1] }} was <strong>{{ n[2] }}</strong></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+                
+                <div class="alert alert-light">
+                    <h5><i class="bi bi-info-circle"></i> Quick Stats</h5>
+                    <p>Here you can view your leave applications and apply for new ones.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

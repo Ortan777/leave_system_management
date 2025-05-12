@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block title %}All Leave Records{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <div class="d-flex justify-content-between align-items-center">
+            <h5><i class="bi bi-list-check"></i> All Leave Records</h5>
+            <div>
+                <button class="btn btn-sm btn-outline-primary" id="filterBtn">
+                    <i class="bi bi-funnel"></i> Filter
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card-body">
+        <!-- Filter Form (initially hidden) -->
+        <div class="mb-3 p-3 border rounded" id="filterForm" style="display: none;">
+            <form method="get" class="row g-3">
+                <div class="col-md-3">
+                    <label class="form-label">USN</label>
+                    <input type="text" name="usn" class="form-control" placeholder="Search USN">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Name</label>
+                    <input type="text" name="name" class="form-control" placeholder="Search name">
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">Status</label>
+                    <select name="status" class="form-select">
+                        <option value="">All</option>
+                        <option value="Approved">Approved</option>
+                        <option value="Rejected">Rejected</option>
+                        <option value="pending">Pending</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">From Date</label>
+                    <input type="date" name="from_date" class="form-control">
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">To Date</label>
+                    <input type="date" name="to_date" class="form-control">
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary btn-sm">
+                        <i class="bi bi-search"></i> Apply Filters
+                    </button>
+                    <a href="/admin/records" class="btn btn-outline-secondary btn-sm ms-2">
+                        <i class="bi bi-arrow-counterclockwise"></i> Reset
+                    </a>
+                </div>
+            </form>
+        </div>
+
+        {% if records %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>USN</th>
+                        <th>Name</th>
+                        <th>From Date</th>
+                        <th>To Date</th>
+                        <th>Reason</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in records %}
+                    <tr>
+                        <td>{{ record[0] | upper }}</td>  <!-- USN (forced uppercase) -->
+                        <td>{{ record[1] or '-' }}</td>  <!-- Name -->
+                        <td>{{ record[2] or '-' }}</td>  <!-- From Date -->
+                        <td>{{ record[3] or '-' }}</td>  <!-- To Date -->
+                        <td>{{ record[4] or '-' }}</td>  <!-- Reason -->
+                        <td>
+                            {% if record[5] %}  <!-- Status -->
+                                <span class="badge bg-{{ 'success' if record[5] == 'Approved' else 'danger' if record[5] == 'Rejected' else 'warning' }}">
+                                    {{ record[5] }}
+                                </span>
+                            {% else %}
+                                <span class="badge bg-secondary">-</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if record[5] == 'pending' %}
+                            <div class="btn-group btn-group-sm">
+                                <form method="post" action="/admin/requests" class="d-inline">
+                                    <input type="hidden" name="usn" value="{{ record[0] }}">
+                                    <input type="hidden" name="from_date" value="{{ record[2] }}">
+                                    <input type="hidden" name="to_date" value="{{ record[3] }}">
+                                    <button type="submit" name="decision" value="approve" class="btn btn-success">
+                                        <i class="bi bi-check"></i>
+                                    </button>
+                                    <button type="submit" name="decision" value="reject" class="btn btn-danger">
+                                        <i class="bi bi-x"></i>
+                                    </button>
+                                </form>
+                            </div>
+                            {% else %}
+                            <span class="text-muted">N/A</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-info">
+            No leave records found in the system.
+        </div>
+        {% endif %}
+        <a href="/admin" class="btn btn-secondary mt-3">
+            <i class="bi bi-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+</div>
+
+<script>
+    // Toggle filter form visibility
+    document.getElementById('filterBtn').addEventListener('click', function() {
+        const form = document.getElementById('filterForm');
+        form.style.display = form.style.display === 'none' ? 'block' : 'none';
+    });
+</script>
+{% endblock %}

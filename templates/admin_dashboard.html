@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4">
+        <div class="card text-white bg-primary mb-3">
+            <div class="card-header">
+                <h5><i class="bi bi-people"></i> Leave Requests</h5>
+            </div>
+            <div class="card-body">
+                <p>View and approve pending leave requests from students.</p>
+                <a href="/admin/requests" class="btn btn-light">
+                    <i class="bi bi-arrow-right"></i> Go to Requests
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-success mb-3">
+            <div class="card-header">
+                <h5><i class="bi bi-file-earmark-spreadsheet"></i> Records</h5>
+            </div>
+            <div class="card-body">
+                <p>View all leave records in the system.</p>
+                <a href="/admin/records" class="btn btn-light">
+                    <i class="bi bi-arrow-right"></i> View Records
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-info mb-3">
+            <div class="card-header">
+                <h5><i class="bi bi-download"></i> Export Data</h5>
+            </div>
+            <div class="card-body">
+                <p>Export attendance data to CSV format.</p>
+                <a href="/admin/export" class="btn btn-light">
+                    <i class="bi bi-download"></i> Export CSV
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

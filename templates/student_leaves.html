@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Subject Leaves</title>
+</head>
+<body>
+    <h2>📊 Subject-wise Leave Report</h2>
+    <ul>
+        {% for line in leaves %}
+            <li>{{ line }}</li>
+        {% endfor %}
+    </ul>
+    <a href="/student">🔙 Back to Dashboard</a>
+</body>
+</html>
